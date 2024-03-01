@@ -1,0 +1,100 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+
+public class IdentityCard extends JFrame {
+    private JTextField schoolField, nameField, idField, departmentField, levelField;
+    private JButton generateButton;
+
+
+    public IdentityCard() {
+        super("Student Identity Card");
+        initializeComponents();
+        setLayout(new BorderLayout());
+        add(createImagePanel(), BorderLayout.WEST);
+        add(createFormPanel(), BorderLayout.CENTER);
+    }
+
+
+    private void initializeComponents() {
+        schoolField = new JTextField(30);
+        nameField = new JTextField(20);
+        idField = new JTextField(10);
+        departmentField = new JTextField(15);
+        levelField = new JTextField(15);
+        generateButton = new JButton("Generate ID Card");
+        generateButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                generateIDCard();
+            }
+        });
+    }
+
+
+    private JPanel createImagePanel() {
+        ImageIcon icon = new ImageIcon("C:\\Users\\MUSA IBRAHIM GALADIM\\Desktop\\IMG_20200724_121253.jpg"); // Replace with the actual path to your image
+        Image image = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(image);
+        JLabel imageLabel = new JLabel(resizedIcon);
+        JPanel imagePanel = new JPanel(new BorderLayout());
+        imagePanel.add(imageLabel, BorderLayout.CENTER);
+        return imagePanel;
+    }
+
+
+    private JPanel createFormPanel() {
+        JPanel formPanel = new JPanel(new GridLayout(6, 2, 5, 5));
+        formPanel.add(new JLabel("School Name:"));
+        formPanel.add(schoolField);
+        formPanel.add(new JLabel("Student Name:"));
+        formPanel.add(nameField);
+        formPanel.add(new JLabel("Student ID:"));
+        formPanel.add(idField);
+        formPanel.add(new JLabel("Department:"));
+        formPanel.add(departmentField);
+        formPanel.add(new JLabel("LEVEL:"));
+        formPanel.add(levelField);
+        formPanel.add(new JLabel(""));
+        formPanel.add(generateButton);
+        return formPanel;
+    }
+
+
+    private void generateIDCard() {
+        JFrame idCardFrame = new JFrame();
+        idCardFrame.setTitle("Generated ID Card");
+        idCardFrame.setSize(600, 400);
+        idCardFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        idCardFrame.setLayout(new BorderLayout());
+        idCardFrame.add(createImagePanel(), BorderLayout.NORTH);
+        idCardFrame.add(createIDCardLabel(), BorderLayout.CENTER);
+        idCardFrame.setVisible(true);
+    }
+
+
+    private JLabel createIDCardLabel() {
+        String school = schoolField.getText();
+        String name = nameField.getText();
+        String id = idField.getText();
+        String department = departmentField.getText();
+        String level = levelField.getText();
+
+
+        return new JLabel("<html><center><h2>Student Identity Card</h2><br>" +
+                "School name: " + school  + "<br>" +
+                "Student Name: " + name + "<br>" +
+                "Student ID: " + id + "<br>" +
+                "Department: " + department +  "<br>" +
+                "LEVEL: " + level + "<br>" +"</center></html>");
+    }
+
+
+    public static void main(String[] args) {
+        IdentityCard idCard = new IdentityCard();
+        idCard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        idCard.setSize(800, 400);
+        idCard.setVisible(true);
+    }
+}
